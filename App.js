@@ -1,29 +1,30 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import firebase from 'firebase';
 
 import store from './store';
-import WelcomeScreen from './screens/WelcomeScreen';
-import AuthScreen from './screens/AuthScreen';
-import MapScreen from './screens/MapScreen';
+import SwitchNavigator from './router/routes';
 
 export default class App extends React.Component {
-  render() {
-    const MainNavigator = createBottomTabNavigator({
-      auth: AuthScreen,
-      welcome: WelcomeScreen,
-      main: {
-        screen: createBottomTabNavigator({
-          map: MapScreen
-        })
-      }
-    });
+  componentWillMount() {
+    var config = {
+      apiKey: "AIzaSyDiMd5tCn0Q9vsCpe21mjAOdd2SlLCLGlQ",
+      authDomain: "parknpark-accfd.firebaseapp.com",
+      databaseURL: "https://parknpark-accfd.firebaseio.com",
+      projectId: "parknpark-accfd",
+      storageBucket: "parknpark-accfd.appspot.com",
+      messagingSenderId: "331645873890"
+    };
 
+    firebase.initializeApp(config);
+  }
+
+  render() {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <MainNavigator /> 
+          <SwitchNavigator />
         </View>
       </Provider>
     );
